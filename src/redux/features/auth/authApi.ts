@@ -5,9 +5,13 @@ interface LoginCredentials {
   password: string;
 }
 
-interface RegisterCredentials {}
+interface RegisterCredentials {
+  name: string;
+  email: string;
+  password: string;
+}
 
-const productApi = api.injectEndpoints({
+const authApi = api.injectEndpoints({
   endpoints: (builder) => {
     return {
       login: builder.mutation({
@@ -32,4 +36,4 @@ const productApi = api.injectEndpoints({
   },
 });
 
-export const { useLoginMutation, useRegisterMutation } = productApi;
+export const { useLoginMutation, useRegisterMutation } = authApi;

@@ -1,12 +1,25 @@
 import Footer from "../components/shared/Footer";
 import Navbar from "../components/shared/Navbar";
 import { Outlet } from "react-router-dom";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { useEffect } from "react";
 import { AuthState, saveAuth } from "../redux/features/auth/authSlice";
+import { useGetBooksQuery } from "../redux/features/book/bookApi";
+import { toast } from "react-toastify";
+import { getBooks } from "../redux/features/book/bookSlice";
 
 export default function NavbarAndFooter() {
   const dispatch = useAppDispatch();
+  const { data, isSuccess, isError, error } = useGetBooksQuery(undefined);
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(getBooks(data?.data));
+    }
+    if (isError) {
+      toast.error(error?.message);
+    }
+  }, [isSuccess, isError]);
 
   useEffect(() => {
     const authString = localStorage.getItem("auth");

@@ -16,7 +16,7 @@ export default function LoginForm() {
     <div>
       <h1 className="text-2xl font-semibold text-slate-800 mb-5">Login</h1>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ email: "demo@account.com", password: "12345678" }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
             .email("Invalid email")
