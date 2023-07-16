@@ -1,12 +1,12 @@
 import { InputHTMLAttributes } from "react";
 
-interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface CustomInputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
 }
 export default function CustomInputField({
   className,
   ...restProps
-}: CustomInputProps) {
+}: CustomInputFieldProps) {
   return (
     <div>
       <input

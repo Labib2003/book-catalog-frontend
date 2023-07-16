@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { toggleMobileNavMenu } from "../../redux/features/ui/uiSlice";
 
 export default function Navbar() {
+  const { mobileNavMenuOpen } = useAppSelector((state) => state.uiReducer);
+  const dispatch = useAppDispatch();
   return (
     <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-teal-500 mb-3">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
@@ -14,6 +18,7 @@ export default function Navbar() {
           <button
             className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
             type="button"
+            onClick={() => dispatch(toggleMobileNavMenu())}
           >
             <span className="block relative w-6 h-px rounded-sm bg-white"></span>
             <span className="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
@@ -21,10 +26,15 @@ export default function Navbar() {
           </button>
         </div>
         <div
-          className="lg:flex flex-grow items-center"
+          className={" lg:flex flex-grow items-center"}
           id="example-navbar-warning"
         >
-          <ul className="flex flex-col lg:flex-row list-none ml-auto">
+          <ul
+            className={
+              (mobileNavMenuOpen ? "flex" : "hidden") +
+              " lg:flex flex-col lg:flex-row list-none ml-auto"
+            }
+          >
             <li className="nav-item">
               <Link
                 to="/all-books"
