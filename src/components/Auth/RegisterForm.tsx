@@ -3,14 +3,23 @@ import CustomButton from "../shared/CustomButton";
 import CustomInputField from "../shared/CustomInputField";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useRegisterMutation } from "../../redux/features/auth/authApi";
+import { toast } from "react-toastify";
 
 export default function RegisterForm() {
+  const [register, { isError, isLoading, error }] = useRegisterMutation();
   return (
     <div>
       <h1 className="text-2xl font-semibold text-slate-800 mb-5">Register</h1>
       <Formik
-        initialValues={{ email: "", password: "", confirmPassword: "" }}
+        initialValues={{
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        }}
         validationSchema={Yup.object().shape({
+          name: Yup.string().required("Name is required"),
           email: Yup.string()
             .email("Invalid email")
             .required("Email is required"),
@@ -21,12 +30,28 @@ export default function RegisterForm() {
             .oneOf([Yup.ref("password"), undefined], "Passwords must match")
             .required("Retype password"),
         })}
-        onSubmit={(values) => {
+        onSubmit={async (values) => {
           console.log(values);
+          const { confirmPassword, ...credentials } = values;
+          const res = await register(credentials);
+          toast.success(res.data.message);
         }}
         enableReinitialize
       >
         <Form>
+          <div className="mb-3">
+            <Field
+              name="name"
+              as={CustomInputField}
+              type="text"
+              placeholder="Name"
+            />
+            <ErrorMessage
+              name="name"
+              component="span"
+              className="text-red-500 font-semibold"
+            />
+          </div>
           <div className="mb-3">
             <Field
               name="email"
@@ -72,7 +97,18 @@ export default function RegisterForm() {
               Login
             </Link>
           </p>
-          <CustomButton type="submit">Register</CustomButton>
+          <CustomButton type="submit">
+            {isLoading ? (
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+            ) : (
+              "Register"
+            )}
+          </CustomButton>
+          {isError && error && (
+            <div className="text-red-500 font-semibold">
+              {error.data?.message}
+            </div>
+          )}
         </Form>
       </Formik>
     </div>
