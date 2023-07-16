@@ -5,6 +5,6 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://book-catalog-backend-one.vercel.app/api/v1",
   }),
-  tagTypes: [],
+  tagTypes: ["books"],
   endpoints: () => ({}),
 });

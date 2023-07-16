@@ -5,6 +5,7 @@ import RegisterForm from "./components/Auth/RegisterForm";
 import Home from "./pages/Home";
 import NavbarAndFooter from "./layouts/NavbarAndFooter";
 import AllBooks from "./pages/AllBooks";
+import CreateNewBook from "./pages/CreateNewBook";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "all-books",
         element: <AllBooks />,
+      },
+      {
+        path: "create-new-book",
+        element: <CreateNewBook />,
       },
     ],
   },

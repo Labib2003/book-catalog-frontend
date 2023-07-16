@@ -10,7 +10,8 @@ import { getBooks } from "../redux/features/book/bookSlice";
 
 export default function NavbarAndFooter() {
   const dispatch = useAppDispatch();
-  const { data, isSuccess, isError, error } = useGetBooksQuery(undefined);
+  const { data, isSuccess, isError, error, isFetching } =
+    useGetBooksQuery(undefined);
 
   useEffect(() => {
     if (isSuccess) {
@@ -19,7 +20,7 @@ export default function NavbarAndFooter() {
     if (isError) {
       toast.error(error?.message);
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess, isError, isFetching]);
 
   useEffect(() => {
     const authString = localStorage.getItem("auth");

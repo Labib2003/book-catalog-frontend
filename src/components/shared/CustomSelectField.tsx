@@ -5,7 +5,7 @@ interface CustomInputFieldProps extends InputHTMLAttributes<HTMLSelectElement> {
   className?: string;
   children: ReactNode;
 }
-export default function CustomInputField({
+export default function CustomSelectField({
   className,
   children,
   ...restProps

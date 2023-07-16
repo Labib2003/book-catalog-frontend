@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import CustomButton from "../components/shared/CustomButton";
 import { Book } from "../redux/features/book/bookSlice";
 import { useAppSelector } from "../redux/hooks";
@@ -17,7 +18,9 @@ export default function Home() {
             <span className="text-orange-500">Free!</span>
           </h3>
           <hr className="mb-5" />
-          <CustomButton>Publish Your Own Book!</CustomButton>
+          <Link to="/create-new-book">
+            <CustomButton>Publish Your Own Book!</CustomButton>
+          </Link>
         </div>
         <div className="max-w-md">
           <img
