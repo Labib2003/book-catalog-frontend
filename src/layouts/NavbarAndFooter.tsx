@@ -1,13 +1,15 @@
+import Footer from "../components/shared/Footer";
 import Navbar from "../components/shared/Navbar";
 import { Outlet } from "react-router-dom";
 
 export default function NavbarAndFooter() {
   return (
-    <div>
+    <div className="h-screen flex flex-col">
       <Navbar />
-      <div className="container mx-auto">
+      <div className="container mx-auto flex-grow">
         <Outlet />
       </div>
+      <Footer  />
     </div>
   );
 }
