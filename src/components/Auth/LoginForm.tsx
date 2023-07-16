@@ -1,12 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "../shared/CustomButton";
 import CustomInputField from "../shared/CustomInputField";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
+import { useAppDispatch } from "../../redux/hooks";
+import { saveAuth } from "../../redux/features/auth/authSlice";
 
 export default function LoginForm() {
   const [login, { error, isLoading, isError }] = useLoginMutation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   return (
     <div>
       <h1 className="text-2xl font-semibold text-slate-800 mb-5">Login</h1>
@@ -21,9 +26,11 @@ export default function LoginForm() {
             .min(8, "Password must be 8 characters long"),
         })}
         onSubmit={async (values) => {
-          console.log(values);
           const res = await login(values);
-          console.log(res);
+          dispatch(saveAuth(res.data.data));
+          localStorage.setItem("token", res.data.data.accessToken);
+          localStorage.setItem("auth", JSON.stringify(res.data.data));
+          navigate("/");
         }}
         enableReinitialize
       >

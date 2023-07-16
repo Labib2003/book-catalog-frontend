@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { toggleMobileNavMenu } from "../../redux/features/ui/uiSlice";
+import { deleteAuth } from "../../redux/features/auth/authSlice";
 
 export default function Navbar() {
-  const { mobileNavMenuOpen } = useAppSelector((state) => state.uiReducer);
+  const { mobileNavMenuOpen } = useAppSelector((state) => state.ui);
+  const { name } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+
   return (
     <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-teal-500 mb-3">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
@@ -44,12 +47,26 @@ export default function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link
-                to="/auth"
-                className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-              >
-                Login/Register
-              </Link>
+              {name ? (
+                <button
+                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                  onClick={() => {
+                    dispatch(deleteAuth());
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("token");
+                    window.location.reload();
+                  }}
+                >
+                  Logout
+                </button>
+              ) : (
+                <Link
+                  to="/auth"
+                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                >
+                  Login/Register
+                </Link>
+              )}
             </li>
           </ul>
         </div>
