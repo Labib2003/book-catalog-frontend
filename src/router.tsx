@@ -4,6 +4,7 @@ import LoginForm from "./components/Auth/LoginForm";
 import RegisterForm from "./components/Auth/RegisterForm";
 import Home from "./pages/Home";
 import NavbarAndFooter from "./layouts/NavbarAndFooter";
+import AllBooks from "./pages/AllBooks";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "all-books",
+        element: <AllBooks />,
       },
     ],
   },

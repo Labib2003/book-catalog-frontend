@@ -4,12 +4,12 @@ import { Outlet } from "react-router-dom";
 
 export default function NavbarAndFooter() {
   return (
-    <div className="h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
       <div className="container mx-auto flex-grow">
         <Outlet />
       </div>
-      <Footer  />
+      <Footer />
     </div>
   );
 }

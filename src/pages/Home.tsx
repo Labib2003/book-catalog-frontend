@@ -36,13 +36,16 @@ export default function Home() {
                 #
               </th>
               <th className="font-semibold border border-collapse border-teal-800 py-3">
-                Book
+                Title
               </th>
               <th className="font-semibold border border-collapse border-teal-800 py-3">
                 Author
               </th>
               <th className="font-semibold border border-collapse border-teal-800 py-3">
-                Category
+                Genre
+              </th>
+              <th className="font-semibold border border-collapse border-teal-800 py-3">
+                Publication Date
               </th>
             </tr>
           </thead>
