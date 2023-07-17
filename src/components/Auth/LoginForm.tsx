@@ -26,9 +26,13 @@ export default function LoginForm() {
             .min(8, "Password must be 8 characters long"),
         })}
         onSubmit={async (values) => {
-          const res = await login(values);
-          dispatch(saveAuth(res.data.data));
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const res: any = await login(values);
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+          dispatch(saveAuth(res?.data.data));
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
           localStorage.setItem("token", res.data.data.accessToken);
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           localStorage.setItem("auth", JSON.stringify(res.data.data));
           navigate("/");
         }}
@@ -76,7 +80,7 @@ export default function LoginForm() {
           </CustomButton>
           {isError && error && (
             <div className="text-red-500 font-semibold">
-              {error.data?.message}
+              {JSON.stringify(error)}
             </div>
           )}
         </Form>

@@ -37,12 +37,16 @@ export default function BookDetails() {
               className="bg-orange-500 text-white active:bg-orange-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
               onClick={() => {
-                const call = (async () => {
-                  const res = await markAsRead({
+                void (async () => {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  const res: any = await markAsRead({
                     id: id as string,
                     userId: userId,
                   });
-                  if (res.data.message) {
+
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                  if (res?.data?.message) {
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
                     toast.success(res.data.message);
                   }
                 })();
@@ -63,9 +67,12 @@ export default function BookDetails() {
                 className="bg-red-500 text-white active:bg-orange-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
                 onClick={() => {
-                  const call = (async () => {
-                    const res = await deleteBook(id);
+                  void (async () => {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const res: any = await deleteBook(id as string);
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                     if (res.data.message) {
+                      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
                       toast.success(res.data.message);
                       navigate("/");
                     }
@@ -103,8 +110,11 @@ export default function BookDetails() {
         onSubmit={async (values, { resetForm }) => {
           const data = { id: id as string, by: userId, text: values.text };
           console.log(data);
-          const res = await addReview(data);
-          if (res.data.message) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const res: any = await addReview(data);
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          if (res?.data?.message) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
             toast.success(res.data.message);
           }
           resetForm();

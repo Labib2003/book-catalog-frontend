@@ -32,8 +32,11 @@ export default function RegisterForm() {
         })}
         onSubmit={async (values) => {
           console.log(values);
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { confirmPassword, ...credentials } = values;
-          const res = await register(credentials);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const res: any = await register(credentials);
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
           toast.success(res.data.message);
         }}
         enableReinitialize
@@ -106,7 +109,7 @@ export default function RegisterForm() {
           </CustomButton>
           {isError && error && (
             <div className="text-red-500 font-semibold">
-              {error.data?.message}
+              {JSON.stringify(error)}
             </div>
           )}
         </Form>

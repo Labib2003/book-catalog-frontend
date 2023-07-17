@@ -8,7 +8,7 @@ import { useAddBookMutation } from "../redux/features/book/bookApi";
 
 export default function CreateNewBook() {
   const { userId } = useAppSelector((state) => state.auth);
-  const [addNewBook, { isError, error, isLoading }] = useAddBookMutation();
+  const [addNewBook, { isLoading }] = useAddBookMutation();
   return (
     <div>
       <h1 className="text-2xl font-semibold text-slate-800 mb-5">
@@ -68,11 +68,6 @@ export default function CreateNewBook() {
               "Create"
             )}
           </CustomButton>
-          {isError && error && (
-            <div className="text-red-500 font-semibold">
-              {error.data?.message}
-            </div>
-          )}
         </Form>
       </Formik>
     </div>

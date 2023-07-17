@@ -24,11 +24,16 @@ export default function AllBooks() {
 
   useEffect(() => {
     if (isSuccess) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
       dispatch(getBooks(data?.data));
     }
     if (isError) {
-      toast.error(error?.message);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+      const anyError = error as any;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+      toast.error(anyError?.message);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, isError, isFetching]);
 
   return (

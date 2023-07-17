@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import CustomButton from "../components/shared/CustomButton";
 import { Book } from "../redux/features/book/bookSlice";
-import { useAppSelector } from "../redux/hooks";
 import { useGetBooksQuery } from "../redux/features/book/bookApi";
 
 export default function Home() {
-  const { data, isSuccess, isError, error, isFetching } = useGetBooksQuery({});
+  const { data } = useGetBooksQuery({});
 
   return (
     <div>

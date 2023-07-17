@@ -1,8 +1,5 @@
-import { ReactNode, useEffect } from "react";
-import { AuthState, saveAuth } from "./redux/features/auth/authSlice";
-import { useAppDispatch } from "./redux/hooks";
+import { ReactNode } from "react";
 function App({ children }: { children: ReactNode }) {
-
   return <div>{children}</div>;
 }
 
