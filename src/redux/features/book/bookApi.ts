@@ -3,6 +3,7 @@ import { api } from "../../api/apiSlice";
 interface BookFilters {
   search?: string;
   genre?: string;
+  year?: string;
 }
 interface AddBookPayload {
   title: string;
@@ -18,7 +19,7 @@ const bookApi = api.injectEndpoints({
   endpoints: (builder) => {
     return {
       getBooks: builder.query({
-        query: ({ search, genre }: BookFilters) => {
+        query: ({ search, genre, year }: BookFilters) => {
           const queryParams = new URLSearchParams();
           if (search?.length) {
             queryParams.append("search", search);
@@ -26,7 +27,11 @@ const bookApi = api.injectEndpoints({
           if (genre?.length) {
             queryParams.append("genre", genre);
           }
-          return "/books" + queryParams.toString();
+          if (year?.length) {
+            queryParams.append("year", year);
+          }
+          console.log(queryParams.toString());
+          return "/books?" + queryParams.toString();
         },
         providesTags: ["books"],
       }),

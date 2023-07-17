@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import CustomButton from "../components/shared/CustomButton";
 import { Book } from "../redux/features/book/bookSlice";
 import { useAppSelector } from "../redux/hooks";
+import { useGetBooksQuery } from "../redux/features/book/bookApi";
 
 export default function Home() {
-  const { books } = useAppSelector((state) => state.book);
+  const { data, isSuccess, isError, error, isFetching } = useGetBooksQuery({});
 
   return (
     <div>
@@ -57,13 +58,13 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {books.slice(0, 10).map((book: Book) => {
+            {data?.data.map((book: Book) => {
               return (
                 <tr key={book.id}>
                   <td className="border border-collapse border-teal-800 p-3">
                     {book.id}
                   </td>
-                  <td className="border border-collapse border-teal-800 p-3 capitalize">
+                  <td className="border border-collapse border-teal-800 p-3 capitalize text-blue-500 underline">
                     <Link to={`/books/${book.id}`}>{book.title}</Link>
                   </td>
                   <td className="border border-collapse border-teal-800 p-3 capitalize">

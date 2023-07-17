@@ -28,12 +28,24 @@ interface Review {
   text: string;
 }
 
+interface BookFilter {
+  search: string;
+  genre: string;
+  year: string;
+}
+
 export interface BookState {
   books: Book[];
+  bookFilter: BookFilter;
 }
 
 const initialState: BookState = {
   books: [],
+  bookFilter: {
+    search: "",
+    genre: "",
+    year: "",
+  },
 };
 
 export const bookSlice = createSlice({
@@ -54,9 +66,12 @@ export const bookSlice = createSlice({
         return book;
       });
     },
+    setBookFilter: (state, action: PayloadAction<BookFilter>) => {
+      state.bookFilter = action.payload;
+    },
   },
 });
 
-export const { getBooks, addBook, deleteBook, editBook } = bookSlice.actions;
+export const { getBooks, setBookFilter } = bookSlice.actions;
 
 export default bookSlice.reducer;

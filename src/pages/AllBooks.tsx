@@ -1,9 +1,34 @@
 import { Link } from "react-router-dom";
-import { Book } from "../redux/features/book/bookSlice";
-import { useAppSelector } from "../redux/hooks";
+import {
+  Book,
+  getBooks,
+  setBookFilter,
+} from "../redux/features/book/bookSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import CustomInputField from "../components/shared/CustomInputField";
+import CustomSelectField from "../components/shared/CustomSelectField";
+import CustomButton from "../components/shared/CustomButton";
+import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { useGetBooksQuery } from "../redux/features/book/bookApi";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export default function AllBooks() {
-  const { books } = useAppSelector((state) => state.book);
+  const { books, bookFilter } = useAppSelector((state) => state.book);
+  const dispatch = useAppDispatch();
+  const { data, isSuccess, isError, error, isFetching } =
+    useGetBooksQuery(bookFilter);
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(getBooks(data?.data));
+    }
+    if (isError) {
+      toast.error(error?.message);
+    }
+  }, [isSuccess, isError, isFetching]);
+
   return (
     <div>
       <hr />
@@ -13,6 +38,43 @@ export default function AllBooks() {
       <hr className="mb-5" />
       <hr />
 
+      <Formik
+        initialValues={bookFilter}
+        validationSchema={Yup.object().shape({
+          search: Yup.string(),
+          genre: Yup.string(),
+          year: Yup.string(),
+        })}
+        onSubmit={(values) => {
+          dispatch(setBookFilter(values));
+        }}
+        enableReinitialize
+      >
+        <Form>
+          <div className="flex gap-5 py-3">
+            <Field name="search" as={CustomInputField} placeholder="Search" />
+            <Field as={CustomSelectField} name="genre">
+              <option value="" disabled>
+                Select Genre
+              </option>
+              <option value="textbook">Textbook</option>
+              <option value="biography">Biography</option>
+              <option value="fiction">Fiction</option>
+              <option value="horror">Horror</option>
+            </Field>
+            <Field as={CustomSelectField} name="year">
+              <option value="" disabled>
+                Select Year
+              </option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+              <option value="2020">2020</option>
+            </Field>
+            <CustomButton type="submit">Apply Filter</CustomButton>
+          </div>
+        </Form>
+      </Formik>
       <hr className="mb-5" />
       <table className="w-full table-auto mb-5">
         <thead className="text-xl whitespace-nowrap">
@@ -41,7 +103,7 @@ export default function AllBooks() {
                 <td className="border border-collapse border-teal-800 p-3">
                   {book.id}
                 </td>
-                <td className="border border-collapse border-teal-800 p-3 capitalize">
+                <td className="border border-collapse border-teal-800 p-3 capitalize text-blue-500 underline">
                   <Link to={`/books/${book.id}`}>{book.title}</Link>
                 </td>
                 <td className="border border-collapse border-teal-800 p-3 capitalize">

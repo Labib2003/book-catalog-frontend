@@ -9,8 +9,10 @@ import { toast } from "react-toastify";
 import { getBooks } from "../redux/features/book/bookSlice";
 
 export default function NavbarAndFooter() {
+  const { bookFilter } = useAppSelector((state) => state.book);
   const dispatch = useAppDispatch();
-  const { data, isSuccess, isError, error, isFetching } = useGetBooksQuery({});
+  const { data, isSuccess, isError, error, isFetching } =
+    useGetBooksQuery(bookFilter);
 
   useEffect(() => {
     if (isSuccess) {
