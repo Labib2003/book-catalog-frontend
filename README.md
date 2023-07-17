@@ -1,6 +1,6 @@
 # Frontend for Simple Book Catalog Application
 
-This is the readme file for the frontend part of the Simple Book Catalog Application project. The frontend is built using React, Redux Toolkit and RTK Query. It provides a user interface for users to interact with the book catalog system, including browsing books, adding reviews, and managing their reading list. This readme will provide an overview of the project, instructions for setup, and details about the dependencies used.
+This is the readme file for the frontend part of the Simple Book Catalog Application project. The frontend is built using `React`, `Redux Toolkit` and `RTK Query`. It provides a user interface for users to interact with the book catalog system, including browsing books, adding reviews, and managing their reading list. This readme will provide an overview of the project, instructions for setup, and details about the dependencies used.
 
 # Overview
 
