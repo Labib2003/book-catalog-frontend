@@ -64,7 +64,7 @@ export default function Home() {
                     {book.id}
                   </td>
                   <td className="border border-collapse border-teal-800 p-3 capitalize">
-                    {book.title}
+                    <Link to={`/books/${book.id}`}>{book.title}</Link>
                   </td>
                   <td className="border border-collapse border-teal-800 p-3 capitalize">
                     {book.author.name}

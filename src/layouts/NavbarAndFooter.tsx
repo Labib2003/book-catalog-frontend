@@ -10,8 +10,7 @@ import { getBooks } from "../redux/features/book/bookSlice";
 
 export default function NavbarAndFooter() {
   const dispatch = useAppDispatch();
-  const { data, isSuccess, isError, error, isFetching } =
-    useGetBooksQuery(undefined);
+  const { data, isSuccess, isError, error, isFetching } = useGetBooksQuery({});
 
   useEffect(() => {
     if (isSuccess) {

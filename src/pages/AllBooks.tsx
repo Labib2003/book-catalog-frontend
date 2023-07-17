@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Book } from "../redux/features/book/bookSlice";
 import { useAppSelector } from "../redux/hooks";
 
@@ -9,6 +10,9 @@ export default function AllBooks() {
       <h3 className="text-3xl font-semibold text-slate-800 my-3 text-center">
         All Books
       </h3>
+      <hr className="mb-5" />
+      <hr />
+
       <hr className="mb-5" />
       <table className="w-full table-auto mb-5">
         <thead className="text-xl whitespace-nowrap">
@@ -38,7 +42,7 @@ export default function AllBooks() {
                   {book.id}
                 </td>
                 <td className="border border-collapse border-teal-800 p-3 capitalize">
-                  {book.title}
+                  <Link to={`/books/${book.id}`}>{book.title}</Link>
                 </td>
                 <td className="border border-collapse border-teal-800 p-3 capitalize">
                   {book.author.name}

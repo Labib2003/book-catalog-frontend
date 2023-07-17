@@ -43,9 +43,6 @@ export const bookSlice = createSlice({
     getBooks: (state, action: PayloadAction<Book[]>) => {
       state.books = action.payload;
     },
-    addBook: (state, action: PayloadAction<Book>) => {
-      state.books.push(action.payload);
-    },
     deleteBook: (state, action: PayloadAction<string>) => {
       state.books = state.books.filter((book) => book.id !== action.payload);
     },

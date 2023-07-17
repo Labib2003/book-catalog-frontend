@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import NavbarAndFooter from "./layouts/NavbarAndFooter";
 import AllBooks from "./pages/AllBooks";
 import CreateNewBook from "./pages/CreateNewBook";
+import BookDetails from "./pages/BookDetails";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "create-new-book",
         element: <CreateNewBook />,
+      },
+      {
+        path: "/books/:id",
+        element: <BookDetails />,
       },
     ],
   },

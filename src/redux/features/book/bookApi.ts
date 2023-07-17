@@ -1,16 +1,33 @@
 import { api } from "../../api/apiSlice";
 
+interface BookFilters {
+  search?: string;
+  genre?: string;
+}
 interface AddBookPayload {
   title: string;
   author: string;
   genre: string;
+}
+interface MarkAsReadPayload {
+  id: string;
+  userId: string;
 }
 
 const bookApi = api.injectEndpoints({
   endpoints: (builder) => {
     return {
       getBooks: builder.query({
-        query: () => "/books",
+        query: ({ search, genre }: BookFilters) => {
+          const queryParams = new URLSearchParams();
+          if (search?.length) {
+            queryParams.append("search", search);
+          }
+          if (genre?.length) {
+            queryParams.append("genre", genre);
+          }
+          return "/books" + queryParams.toString();
+        },
         providesTags: ["books"],
       }),
       addBook: builder.mutation({
@@ -23,8 +40,34 @@ const bookApi = api.injectEndpoints({
         },
         invalidatesTags: ["books"],
       }),
+      deleteBook: builder.mutation({
+        query: (id: string) => {
+          return {
+            url: `/books/${id}`,
+            method: "DELETE",
+          };
+        },
+        invalidatesTags: ["books"],
+      }),
+      markAsRead: builder.mutation({
+        query: (payload: MarkAsReadPayload) => {
+          return {
+            url: `/books/mark-as-read/${payload.id}`,
+            method: "PATCH",
+            body: {
+              userId: payload.userId,
+            },
+          };
+        },
+        invalidatesTags: ["books"],
+      }),
     };
   },
 });
 
-export const { useGetBooksQuery, useAddBookMutation } = bookApi;
+export const {
+  useGetBooksQuery,
+  useAddBookMutation,
+  useDeleteBookMutation,
+  useMarkAsReadMutation,
+} = bookApi;
