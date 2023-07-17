@@ -14,6 +14,11 @@ interface MarkAsReadPayload {
   id: string;
   userId: string;
 }
+interface AddReviewPayload {
+  id: string;
+  by: string;
+  text: string;
+}
 
 const bookApi = api.injectEndpoints({
   endpoints: (builder) => {
@@ -56,12 +61,22 @@ const bookApi = api.injectEndpoints({
       }),
       markAsRead: builder.mutation({
         query: (payload: MarkAsReadPayload) => {
+          const { id, ...data } = payload;
           return {
-            url: `/books/mark-as-read/${payload.id}`,
+            url: `/books/mark-as-read/${id}`,
             method: "PATCH",
-            body: {
-              userId: payload.userId,
-            },
+            body: data,
+          };
+        },
+        invalidatesTags: ["books"],
+      }),
+      addReview: builder.mutation({
+        query: (payload: AddReviewPayload) => {
+          const { id, ...data } = payload;
+          return {
+            url: `/books/add-review/${id}`,
+            method: "POST",
+            body: data,
           };
         },
         invalidatesTags: ["books"],
@@ -75,4 +90,5 @@ export const {
   useAddBookMutation,
   useDeleteBookMutation,
   useMarkAsReadMutation,
+  useAddReviewMutation,
 } = bookApi;

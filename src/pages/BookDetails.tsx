@@ -1,11 +1,15 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
-import CustomButton from "../components/shared/CustomButton";
 import {
+  useAddReviewMutation,
   useDeleteBookMutation,
   useMarkAsReadMutation,
 } from "../redux/features/book/bookApi";
 import { toast } from "react-toastify";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import CustomInputField from "../components/shared/CustomInputField";
+import CustomButton from "../components/shared/CustomButton";
 
 export default function BookDetails() {
   const { id } = useParams();
@@ -16,6 +20,7 @@ export default function BookDetails() {
 
   const [deleteBook] = useDeleteBookMutation();
   const [markAsRead] = useMarkAsReadMutation();
+  const [addReview] = useAddReviewMutation();
   const navigate = useNavigate();
 
   return (
@@ -77,7 +82,7 @@ export default function BookDetails() {
         A <span>{book?.genre}</span> book by{" "}
         <span className="font-semibold capitalize">{book?.author.name}</span>
       </h3>
-      Reviews:
+      <p className="text-xl font-semibold">Reviews:</p>
       {book?.reviews.map((review, index) => {
         return (
           <p key={index} className="capitalize font-semibold">
@@ -89,6 +94,36 @@ export default function BookDetails() {
           </p>
         );
       })}
+      <p className="text-xl font-semibold">Add Review:</p>
+      <Formik
+        initialValues={{ text: "" }}
+        validationSchema={Yup.object().shape({
+          text: Yup.string().required("Review is required"),
+        })}
+        onSubmit={async (values, { resetForm }) => {
+          const data = { id: id as string, by: userId, text: values.text };
+          console.log(data);
+          const res = await addReview(data);
+          if (res.data.message) {
+            toast.success(res.data.message);
+          }
+          resetForm();
+        }}
+      >
+        <Form>
+          <div className="flex gap-5 items-start">
+            <span>
+              <Field name="text" as={CustomInputField} placeholder="Review" />
+              <ErrorMessage
+                name="text"
+                component="span"
+                className="text-red-500 font-semibold"
+              />
+            </span>
+            <CustomButton type="submit">Add Review</CustomButton>
+          </div>
+        </Form>
+      </Formik>
     </div>
   );
 }

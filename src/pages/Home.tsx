@@ -58,7 +58,7 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {data?.data.map((book: Book) => {
+            {data?.data.slice(0, 10).map((book: Book) => {
               return (
                 <tr key={book.id}>
                   <td className="border border-collapse border-teal-800 p-3">

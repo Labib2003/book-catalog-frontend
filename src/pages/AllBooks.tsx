@@ -17,8 +17,10 @@ import { toast } from "react-toastify";
 export default function AllBooks() {
   const { books, bookFilter } = useAppSelector((state) => state.book);
   const dispatch = useAppDispatch();
-  const { data, isSuccess, isError, error, isFetching } =
-    useGetBooksQuery(bookFilter);
+  const { data, isSuccess, isError, error, isFetching } = useGetBooksQuery(
+    bookFilter,
+    { pollingInterval: 30000 }
+  );
 
   useEffect(() => {
     if (isSuccess) {
